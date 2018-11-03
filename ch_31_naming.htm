@@ -1,0 +1,277 @@
+<?php
+include '/home/com3dapi/base/header.php';
+?>
+
+<!--------------------------- Menu Begin ----------------------------------------->
+<?php
+							LeftMenu($id);
+?>
+
+<!--------------------------- Menu End ------------------------------------------->
+<?php
+	include '/home/com3dapi/base/bodyInterval.php';
+?>
+<!--------------------------- Body Begin ---------------------------------------->
+
+
+<font color =red size=5>◈Naming Rule◈</font>
+<hr>
+<pre>
+///////////////////////////////////////////////////////////////////////////
+//
+// Naming Rule
+// version: 0.1.0
+// 작성일 :2003-04-01
+//
+
+
+◈ 기본 타입
+	0.	전부 대문자로 형선언
+	1.  TCHAR:				c		// char. TCHAR는 ASCII, UNICODE 둘 다 같은 타입으로 사용이 가능함.
+	3.	INT8:				i,n		// 8 bit int			// i 는 주로 수,  n은 인덱스를 사용할 때
+	3.	INT16:				i,n		// 16 bit int
+	2.  INT :				i,n		// 32 bit int
+	3.  LONG :				l		// 32 bit long
+	4.  WORD:				w		// unsigned short int
+	5.  DWORD:				dw,d	// unsigned int
+	6.  FLOAT:				f
+	7.  DOUBLE:				d		// 실질적으로 쓰이지 않음
+	8.  pointer:			p
+	9.	DOUBLE pointer:		pp
+	10.	Triple pointer:		ppp		// 거의 사용되지 않음
+	11. TCHAR[128]="\0":	s		// char형 배열은 NULL문자로 끝나는
+	12. TCHAR * :			s		// char 포인터형
+	13. BYTE:				c		// unsigned char
+
+	※ 다음은 예외
+	13.	enum:				e		// 실수형 포멧 e를 사용하지 않고 이를 enum형을 가르키게 함
+	14.	bool:				b
+	15.	void:						// 없음
+
+	※ short형과 MFC에서 정의한 타입은 사용하지 않음.
+
+◈ Window
+	1.	HWND:				hWnd
+	2.	HINSTANCE:			hInst
+	3.	HDC:				hDC
+	4.	HMENU:				hMenu
+	5.	RECT:				rc, rt
+	6.	WPARAM:				wParam
+	7.	LPARAM:				lParam
+	8.	POINT:				pt
+
+◈ DX 타입
+	1.	DX D3D:				pD3D
+	2.	DX Device:			pd3dDevice
+	3.	DX vector:			vc
+	4.	DX matrix:			mt
+	5.	DX Quaternion		qt
+	5.	DX texture:			tx
+	6.	DX vertex:			vx
+	7.	DX vertex buffer:	vb
+
+◈ STL
+	1.	STL vector:			v
+	2.	container:			ls			// 예)	typedef vector<SParticle *>		lsParticle
+	3.	iterator:			it			// 예)	typedef lsParticle::iterator	itParticle
+
+◈ 사용자 정의 
+	1.	class:	항상 C(대문자) 로 시작.
+	2.	struct:	항상 대문자 로 시작.
+		예)
+		struct 선언은 
+			typedef struct tagAbc
+			{
+				int iX;
+				int iY;
+			} SAbc, * PSAbc(포인터형);
+
+	3. 임시로 사용하는 구조체의 경우 T로 시작. _T는 UNICODE에서 사용되는 매크로
+		
+	4. enum:	항상 E(대문자)로 한다.
+		예)	enum EGameState....
+
+
+◈ 기타
+	1.	Macro:			전부 대문자
+	2.	const:			타입 + 대문자			ex) const float fRAIAN	= 3.14159f;
+	3.	정수형 임시변수: i, j, k, m, n
+
+◈ 범위
+	1.	global 변수:	기본타입앞에 'g_'.
+	2.	Member 변수:	기본타입앞에 'm_'.
+	3.	자동변수는 기본타입으로만 시작.
+
+	
+◈ 변수
+	1. 일반적으로 변수는 범위 + 포인터(?) + 타입 + 대문자로 시작.
+		예) g_pmatRotation	: D3DXMATRIX 포인터 형 글로벌 변수.
+
+	2. 사용자가 정의한 class나 struct 일 경우, 범위 + 포인터(?) + ClassName +....
+		예) m_pvecPos
+
+	3. 낙타식 표기.
+	
+	
+◈ 멤버 함수
+	1. 멤버함수는 영문 어순 (동사 + 명사(주어, 목적어, 보어))을 기본으로 함.
+	2. 낙타식 표기.		LightingSet(....)
+
+	※ 타입이외에는 줄여 쓰지 않고 풀네임으로 함. 예)	HelloWorld(...), 
+
+◈ 함수
+
+	1. 들여쓰기
+	
+	int main()
+	{
+		return 0;
+	}
+
+	으로 한번 더 들임.
+
+	2. Brace
+		for(int i=0; i< 10; ++i)			(o)
+		{	
+			
+		}
+
+		for(int i=0; i< 10; ++i)	{		(x)
+		}
+	
+	3. 여백을 두어 보기 편하게 하자.
+		- 선언, 정의, 조건, 분기문 앞에서 빈줄 삽입.
+
+		예)
+		int CountServer()
+		{
+			INT	nReturn;
+
+			nReturn = 0;
+
+			for(int i=0; i<100; ++i)
+			{
+				nReturn +=i;
+			}
+
+			return nReturn;
+		}
+
+
+◈ 예약 동사
+	1.	Init			개체를 외부에서 초기화 Destory와 쌍을 이룸
+	2.	Destroy			개체를 외부에서 명시적으로 파괴
+	3.	Create			개체를 생성 Release와 쌍을 이룸
+	4.	Release			개체를 해제
+	4.	FrameMove		Update와 같은 개념
+	5.	Draw			2D 그릴 때
+	6.	Render			3D 그릴 때
+	7.	Init			InitDeviceObjects
+	8.	Restore			RestoreDeviceObjects
+	9.  Invalidate		InvalidateDeviceObjects
+	10.	Load			Data file load or model file load
+
+◈ 예약 명사
+	1.	Scn				Screen
+	2.	W				Width
+	3.	H				Height		예)	ScnW: ScreenWidth, ScnH: ScreenHeight
+	4.	Idx				Index
+	5.	Num				Number
+	6.	Tbl				Table 자료구조. 모델
+
+
+◈ Nef type
+1.	VEC3	D3DXVECTOR3
+2.	VEC2	D3DXVECTOR2
+3.	VEC4	D3DXVECTOR4
+4.	MAT		D3DXMATRIXA16
+5.	QAT		D3DXQUATERNION
+6.	PD3D	LPDIRECT3D9
+7.	PDEV	LPDIRECT3DDEVICE9
+8.	PDSP	LPD3DXSPRITE
+9.	PDTX	LPDIRECT3DTEXTURE9
+10.	PDVB	LPDIRECT3DVERTEXBUFFER9
+11. PDBL	LPDIRECT3DSTATEBLOCK9
+12.	PDIB	LPDIRECT3DINDEXBUFFER9
+
+
+10. 전체적인 예
+
+
+●파일의 처음
+//
+// Explain: 룰렛 게임의 메인 어플리케이션 클래스 선언
+// Author  : SR OnLine YYH
+// Date    : 2003-03-05
+// History : 1차 작성
+///////////////////////////////////////////////////////////////////////////
+
+
+
+●클래스가 있으면
+//
+// Title   : TEST 어플리케이션 클래스
+// Explain : TEST 게임의 메인 어플리케이션 클래스
+///////////////////////////////////////////////////////////////////////////
+
+class CMyClass
+{
+	private:
+		int 	m_iIndex;
+		bool	m_bChange;
+		char	m_szName[128];
+		char*	m_pszAddress;
+		
+	public:
+		CMyClass();
+		virtual ~CMyClass();	// 상속받을지도 모르니까...
+	
+		// 외부 파일로 부터 데이터를 읽어들여 파싱
+		INT		ReadData(FILE* fp, bool bChange, char * pszText);
+		
+		// 사용자의 주소를 설정
+		VOID	SetAddress(char* pszAddress);
+		
+		// 사용자 이름을 전달하여 사용자의 인덱스를 획득
+		int		GetUserIndex(char* pszUserName);
+};
+
+
+
+// Explain : 어플리케이션에서 사용되는 전역 포인터
+
+										// 주석을 가급적 오른쪽에 줄맞추어 넣자...
+
+CRAApp*				g_pRAApp;			// Global application pointer
+CNetworkAdapter*	g_pAdapters;		// Global adapter list pointer
+
+// 다음도 사용 가능하다.
+CRAApp			*	g_pRAApp;
+CNetworkAdapter	*	g_pAdapters;
+
+// 다음은 사용하지 말자.
+CRAApp				*g_pRAApp;
+CNetworkAdapter		*g_pAdapters;
+
+
+
+// Construction/Destruction
+
+CMyClass::CMyClass()
+{
+	INT nCountPlayer = 0;
+
+	...
+}
+
+
+CMyClass::~CMyClass()
+{
+	
+}
+</pre>
+
+<!--------------------------- Body end    ---------------------------------------->
+<?php
+	include '/home/com3dapi/base/tail.php';
+?>

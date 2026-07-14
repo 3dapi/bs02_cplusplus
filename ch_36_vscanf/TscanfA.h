@@ -1,0 +1,12 @@
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef ___TSCANFA_H___
+#define ___TSCANFA_H___
+
+
+int TscanfA(char* sBuf, char* format, ...);
+
+#endif
+
+

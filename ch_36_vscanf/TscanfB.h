@@ -1,0 +1,13 @@
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef ___TSCANFB_H___
+#define ___TSCANFB_H___
+
+
+int TscanfB(char* sBuf, char* format, ...);
+
+#endif
+
+
+
